@@ -1,0 +1,4 @@
+﻿  Sort_BSearch03.cpp
+C:\Users\User\Desktop\Lab616寒訓\Sort_BSearch03\Sort_BSearch03\Sort_BSearch03.cpp(47,51): warning C4267: '引數': 將 'size_t' 轉換為 'int'，資料可能遺失
+C:\Users\User\Desktop\Lab616寒訓\Sort_BSearch03\Sort_BSearch03\Sort_BSearch03.cpp(122,15): warning C4267: '正在初始化': 將 'size_t' 轉換為 'int'，資料可能遺失
+  Sort_BSearch03.vcxproj -> C:\Users\User\Desktop\Lab616寒訓\Sort_BSearch03\x64\Debug\Sort_BSearch03.exe
