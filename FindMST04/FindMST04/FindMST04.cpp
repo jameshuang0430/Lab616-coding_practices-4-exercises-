@@ -79,7 +79,6 @@ int readFileData(string fileName)
     while (getline(fin, line)) {
         split(line);
     }
-
     fin.close();
 }
 int writeFileData(string fileName)
@@ -181,7 +180,6 @@ void findMST()
         sum += MST[i].distance;
     }
 
-    // 打印最小生成樹
     cout << "Minimum Spanning Tree:" << endl;
     for (int i = 0; i < MST.size(); i++)
     {
