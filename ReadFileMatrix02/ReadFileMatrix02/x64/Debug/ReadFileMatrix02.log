@@ -1,0 +1,5 @@
+﻿  ReadFileMatrix02.cpp
+C:\Users\User\Desktop\Lab616寒訓\ReadFileMatrix02\ReadFileMatrix02\ReadFileMatrix02.cpp(159,34): warning C4267: '=': 將 'size_t' 轉換為 'int'，資料可能遺失
+C:\Users\User\Desktop\Lab616寒訓\ReadFileMatrix02\ReadFileMatrix02\ReadFileMatrix02.cpp(189,34): warning C4267: '=': 將 'size_t' 轉換為 'int'，資料可能遺失
+C:\Users\User\Desktop\Lab616寒訓\ReadFileMatrix02\ReadFileMatrix02\ReadFileMatrix02.cpp(190,34): warning C4267: '=': 將 'size_t' 轉換為 'int'，資料可能遺失
+  ReadFileMatrix02.vcxproj -> C:\Users\User\Desktop\Lab616寒訓\ReadFileMatrix02\x64\Debug\ReadFileMatrix02.exe
