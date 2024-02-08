@@ -12,12 +12,13 @@ double findDistance(struct node a, struct node b);
 bool isCycle(string name2);
 void split(string& s);
 void coutVectorData(vector<struct node>& v);
-
 void findMST();
+
 double sum = 0;
 string inputFileName;
 string fileNumber;
 string outputFileName = "mst";
+
 struct node {
     string nodeName;
     int x;
@@ -36,7 +37,6 @@ vector<edge> MST;
 ifstream fin;
 ofstream fout;
 
-
 static bool compareDistance(const edge& a, const edge& b) {
     return a.distance < b.distance;
 }
@@ -45,10 +45,10 @@ int main()
 {
     cout << "Enter the file name: ";
     cin >> inputFileName;
+
     readFileData(inputFileName);
-    //for testing purpose
-    coutVectorData(nodelist);
     findMST();
+
     outputFileName += fileNumber;
     writeFileData(outputFileName);
 }
@@ -96,7 +96,6 @@ int writeFileData(string fileName)
     fout << "****************************" << endl;
     fout << "Total Wire Length = " << sum << endl;
 }
-
 void coutVectorData(vector<node>& v)
 {
     for (int i = 0; i < v.size(); i++)
@@ -137,14 +136,12 @@ void split(string& s)
     }
     nodelist.push_back({ nodename, x_pos, y_pos });
 }
-
 double findDistance(struct node a, struct node b)
 {
     double distance = 0;
     distance = sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2));
     return distance;
 }
-
 void findMST()
 {
     for (int j = 0; j < nodelist.size(); j++)
@@ -154,15 +151,16 @@ void findMST()
             lengthlist.push_back({ nodelist[j].nodeName, nodelist[i].nodeName, findDistance(nodelist[j], nodelist[i]) });
         }
     }
-
     sort(lengthlist.begin(), lengthlist.end(), compareDistance);
+
+    /*
     //cout legthlist
     for (int i = 0; i < lengthlist.size(); i++)
     {
         cout << lengthlist[i].node1 << " " << lengthlist[i].node2 << " " << lengthlist[i].distance << endl;
     }
     cout << "***************" << endl;
-
+    */
     while (!lengthlist.empty() || MST.size() < nodelist.size() - 1)
     {
         if (!isCycle(lengthlist[0].node2))
@@ -179,7 +177,7 @@ void findMST()
     {
         sum += MST[i].distance;
     }
-
+    /*
     cout << "Minimum Spanning Tree:" << endl;
     for (int i = 0; i < MST.size(); i++)
     {
@@ -187,8 +185,8 @@ void findMST()
     }
     cout << "***************" << endl;
     cout << "Total Wire Length = " << sum << endl;
+    */
 }
-
 bool isCycle(string name2)
 {
     if (MST.empty())
