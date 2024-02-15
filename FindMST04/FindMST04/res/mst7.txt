@@ -1,0 +1,12 @@
+(N3,N10)Length = 9.84886
+(N10,N11)Length = 22.8473
+(N5,N3)Length = 27.7849
+(N8,N5)Length = 11.7047
+(N8,N4)Length = 22.8473
+(N1,N11)Length = 28.3019
+(N1,N7)Length = 22.4722
+(N6,N7)Length = 30.4631
+(N6,N9)Length = 18.6815
+(N8,N2)Length = 34
+****************************
+Total Wire Length = 228.952
