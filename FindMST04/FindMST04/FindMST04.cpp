@@ -9,10 +9,11 @@ using namespace std;
 int readFileData(string fileName);
 int writeFileData(string fileName);
 double findDistance(struct node a, struct node b);
-bool isCycle(string name2);
 void split(string& s);
 void coutVectorData(vector<struct node>& v);
 void findMST();
+bool isInVisited(string targetNode);
+
 
 double sum = 0;
 string inputFileName;
@@ -33,6 +34,7 @@ struct edge {
 vector<node> nodelist;
 vector<edge> lengthlist;
 vector<edge> MST;
+vector<string> visited;
 
 ifstream fin;
 ofstream fout;
@@ -91,7 +93,7 @@ int writeFileData(string fileName)
 
     for (int i = 0; i < MST.size(); i++)
     {
-        fout << "(" << MST[i].node1 << "," << MST[i].node2 <<")Length = " << MST[i].distance << endl;
+        fout << "(" << MST[i].node1 << "," << MST[i].node2 << ")Length = " << MST[i].distance << endl;
     }
     fout << "****************************" << endl;
     fout << "Total Wire Length = " << sum << endl;
@@ -146,38 +148,58 @@ void findMST()
 {
     for (int j = 0; j < nodelist.size(); j++)
     {
-        for (int i = j + 1; i < nodelist.size(); i++)
+        for (int i = 0; i < nodelist.size(); i++)
         {
+            if (nodelist[i].nodeName == nodelist[j].nodeName) { continue; }
             lengthlist.push_back({ nodelist[j].nodeName, nodelist[i].nodeName, findDistance(nodelist[j], nodelist[i]) });
         }
     }
+    cout << "***************" << endl;
     sort(lengthlist.begin(), lengthlist.end(), compareDistance);
 
-    /*
     //cout legthlist
     for (int i = 0; i < lengthlist.size(); i++)
     {
         cout << lengthlist[i].node1 << " " << lengthlist[i].node2 << " " << lengthlist[i].distance << endl;
     }
     cout << "***************" << endl;
-    */
-    while (!lengthlist.empty() || MST.size() < nodelist.size() - 1)
+
+    
+
+    //the algorithm of finding MST 
+    int current = 0;
+    visited.push_back(lengthlist[current].node1);
+
+    while (MST.size() < nodelist.size() - 1)
     {
-        if (!isCycle(lengthlist[0].node2))
+        bool node1State = false;
+        bool node2State = false;
+
+        if (isInVisited(lengthlist[current].node1) != node1State and  isInVisited(lengthlist[current].node2) == node2State)
         {
-            MST.push_back(lengthlist[0]);
+            MST.push_back(lengthlist[current]);
+            visited.push_back(lengthlist[current].node2);
+            current = 0;
+        }
+        else if (isInVisited(lengthlist[current].node1) == node1State and isInVisited(lengthlist[current].node2) != node2State)
+        {
+            MST.push_back(lengthlist[current]);
+            visited.push_back(lengthlist[current].node1);
+            current = 0;
         }
         else
         {
-            lengthlist.erase(lengthlist.begin());
+            current++;
+            continue;
         }
+        current++;
     }
-    
+
     for (int i = 0; i < MST.size(); i++)
     {
         sum += MST[i].distance;
     }
-    /*
+
     cout << "Minimum Spanning Tree:" << endl;
     for (int i = 0; i < MST.size(); i++)
     {
@@ -185,20 +207,19 @@ void findMST()
     }
     cout << "***************" << endl;
     cout << "Total Wire Length = " << sum << endl;
-    */
 }
-bool isCycle(string name2)
+
+
+bool isInVisited(string targetNode)
 {
-    if (MST.empty())
+    for (int i = 0; i < visited.size(); i++)
     {
-        return false;
-    }
-    for (int i = 0; i < MST.size(); i++)
-    {
-        if (name2 == MST[i].node2)
+        if (targetNode == visited[i])
         {
             return true;
         }
     }
     return false;
 }
+
+
