@@ -6,27 +6,6 @@
 #include <algorithm>
 using namespace std;
 
-//                                                   __----~~~~~~~~~~~------___
-//                                     .  .   ~~//====......          __--~ ~~
-//                     -.            \_|//     |||\\  ~~~~~~::::... /~
-//                  ___-==_       _-~o~  \/    |||  \\            _/~~-
-//          __---~~~.==~||\=_    -_--~/_-~|-   |\\   \\        _/~
-//      _-~~     .=~    |  \\-_    '-~7  /-   /  ||    \      /
-//    .~       .~       |   \\ -_    /  /-   /   ||      \   /
-//   /  ____  /         |     \\ ~-_/  /|- _/   .||       \ /
-//   |~~    ~~|--~~~~--_ \     ~==-/   | \~--===~~        .\
-//            '         ~-|      /|    |-~\~~       __--~~
-//                        |-~~-_/ |    |   ~\_   _-~            /\
-//                             /  \     \__   \/~                \__
-//                         _--~ _/ | .-~~____--~-/                  ~~==.
-//                        ((->/~   '.|||' -_|    ~~-/ ,              . _||
-//                                   -_     ~\      ~~---l__i__i__i--~~_/
-//                                   _-~-__   ~)  \--______________--~~
-//                                 //.-~~~-~_--~- |-------~~~~~~~~
-//                                        //.-~~~--\
-//                                 神獸保佑，程式碼沒Bug!
-
-
 int readFileData(string fileName);
 int writeFileData(string fileName);
 double findDistance(struct node a, struct node b);
@@ -34,8 +13,8 @@ void split(string& s);
 void findMST();
 bool isInVisited(string targetNode);
 
-double sum = 0;
-string fileNumber;
+double sum = 0;//to store the total weight of the minimum spanning tree
+string fileNumber;//input file number tag
 string inputFileName;
 string outputFileName = "mst";
 
@@ -49,8 +28,8 @@ struct edge {
     string node2;
     double distance;
 };
-vector<node> nodelist;//to store the attribution of the each nodes
-vector<edge> lengthlist;//to store the attribution of the each edges
+vector<node> nodelist;//to store the attributions of the each nodes
+vector<edge> lengthlist;//to store the attributions of the each edges
 vector<edge> MST;//to store the edges that satisfying the properties to form the minimum spanning tree 
 vector<string> visited;//to record the node those which has been visited
 
