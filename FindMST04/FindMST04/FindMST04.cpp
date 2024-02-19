@@ -10,14 +10,12 @@ int readFileData(string fileName);
 int writeFileData(string fileName);
 double findDistance(struct node a, struct node b);
 void split(string& s);
-void coutVectorData(vector<struct node>& v);
 void findMST();
 bool isInVisited(string targetNode);
 
-
 double sum = 0;
-string inputFileName;
 string fileNumber;
+string inputFileName;
 string outputFileName = "mst";
 
 struct node {
@@ -30,15 +28,15 @@ struct edge {
     string node2;
     double distance;
 };
-
-vector<node> nodelist;
-vector<edge> lengthlist;
-vector<edge> MST;
-vector<string> visited;
+vector<node> nodelist;//to store the attribution of the each nodes
+vector<edge> lengthlist;//to store the attribution of the each edges
+vector<edge> MST;//to store the edges that satisfying the properties to form the minimum spanning tree 
+vector<string> visited;//to record the node those which has been visited
 
 ifstream fin;
 ofstream fout;
 
+//define a comparing method
 static bool compareDistance(const edge& a, const edge& b) {
     return a.distance < b.distance;
 }
@@ -53,6 +51,7 @@ int main()
 
     outputFileName += fileNumber;
     writeFileData(outputFileName);
+    cout << "OK !" << endl;
 }
 
 int readFileData(string fileName)
@@ -75,7 +74,6 @@ int readFileData(string fileName)
         cout << "Failed to open intput file.\n";
         return 1; // EXIT_FAILURE
     }
-
     //split data
     string line;
     while (getline(fin, line)) {
@@ -83,6 +81,7 @@ int readFileData(string fileName)
     }
     fin.close();
 }
+
 int writeFileData(string fileName)
 {
     fout.open("res\\" + fileName + ".txt");
@@ -90,47 +89,39 @@ int writeFileData(string fileName)
         cout << "Failed to open output file.\n";
         return 1;
     }
-
     for (int i = 0; i < MST.size(); i++)
     {
         fout << "(" << MST[i].node1 << "," << MST[i].node2 << ")Length = " << MST[i].distance << endl;
     }
     fout << "****************************" << endl;
     fout << "Total Wire Length = " << sum << endl;
+    fout.close();
 }
-void coutVectorData(vector<node>& v)
-{
-    for (int i = 0; i < v.size(); i++)
-    {
-        cout << v[i].nodeName << " " << v[i].x << " " << v[i].y << endl;
-    }
 
-    cout << "***************" << endl;
-}
-void split(string& s)
+void split(string& str)
 {
     string temp;
     string nodename;
     int x_pos = 0;
     int y_pos = 0;
     int begin = 0;
-    for (int i = 0; i <= s.size(); i++)
+    for (int i = 0; i <= str.size(); i++)
     {
-        if (s[i] == '(')
+        if (str[i] == '(')
         {
-            nodename += s.substr(begin, i);
+            nodename += str.substr(begin, i);
             begin = i + 1;
         }
-        if (s[i] == ',')
+        if (str[i] == ',')
         {
-            temp = s.substr(begin, i);
+            temp = str.substr(begin, i);
             x_pos = stoi(temp);
             begin = i + 1;
             temp = {};
         }
-        if (s[i] == ')')
+        if (str[i] == ')')
         {
-            temp = s.substr(begin, i);
+            temp = str.substr(begin, i);
             y_pos = stoi(temp);
             begin = 0;
             temp = {};
@@ -154,39 +145,31 @@ void findMST()
             lengthlist.push_back({ nodelist[j].nodeName, nodelist[i].nodeName, findDistance(nodelist[j], nodelist[i]) });
         }
     }
-    cout << "***************" << endl;
+    //sort the lengthlist in ascending form
     sort(lengthlist.begin(), lengthlist.end(), compareDistance);
-
-    //cout legthlist
-    for (int i = 0; i < lengthlist.size(); i++)
-    {
-        cout << lengthlist[i].node1 << " " << lengthlist[i].node2 << " " << lengthlist[i].distance << endl;
-    }
-    cout << "***************" << endl;
-
-    
-
     //the algorithm of finding MST 
     int current = 0;
-    visited.push_back(lengthlist[current].node1);
-
+    visited.push_back(lengthlist[current].node1);//the initial node 
     while (MST.size() < nodelist.size() - 1)
     {
         bool node1State = false;
         bool node2State = false;
 
-        if (isInVisited(lengthlist[current].node1) != node1State and  isInVisited(lengthlist[current].node2) == node2State)
+        //node1 is in visited list and node2 is not
+        if (isInVisited(lengthlist[current].node1) != node1State and isInVisited(lengthlist[current].node2) == node2State)
         {
             MST.push_back(lengthlist[current]);
             visited.push_back(lengthlist[current].node2);
             current = 0;
         }
+        //node2 is in visited list and node1 is not 
         else if (isInVisited(lengthlist[current].node1) == node1State and isInVisited(lengthlist[current].node2) != node2State)
         {
             MST.push_back(lengthlist[current]);
             visited.push_back(lengthlist[current].node1);
             current = 0;
         }
+        //node1 and node2 are both in visited list or both not
         else
         {
             current++;
@@ -195,20 +178,12 @@ void findMST()
         current++;
     }
 
+    //calculate the total weight
     for (int i = 0; i < MST.size(); i++)
     {
         sum += MST[i].distance;
     }
-
-    cout << "Minimum Spanning Tree:" << endl;
-    for (int i = 0; i < MST.size(); i++)
-    {
-        cout << MST[i].node1 << " " << MST[i].node2 << " " << MST[i].distance << endl;
-    }
-    cout << "***************" << endl;
-    cout << "Total Wire Length = " << sum << endl;
 }
-
 
 bool isInVisited(string targetNode)
 {
